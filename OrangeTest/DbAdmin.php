@@ -1,6 +1,7 @@
 <?php
 namespace OrangeTest;
 require_once('DbConnector.php');
+require_once('Post.php');
 
 /*
 Provides abstraction layer for manipulating a database.
@@ -69,13 +70,36 @@ class DbAdmin
 
 		mysqli_close($this->mysqli); //close our connection
 		
-		$post = new $Post($postId, $postTitle, $postBody, $postAuthor);
+		$post = new Post($postId, $postTitle, $postBody, $postAuthor);
 		return $post;
 	}
-	
-	public function insertRecords()
+
+	/*
+	Inserts post records.
+	*/	
+	public function insertRecord($id, $title, $body, $createdAt, $modifiedAt, $author)
 	{
+		//remove any characters we don't want:
+		$id = str_replace(';','',$id);
+		$title = str_replace(';','',$title);
+		$body = str_replace(';','',$body);
+		$createdAt = str_replace(';','',$createdAt);
+		$modifiedAt = str_replace(';','',$modifiedAt);
+		$author = str_replace(';','',$author);
 		
+		$sql = "INSERT INTO posts (id, title, body, created_at, modified_at, author) 
+				VALUES ('$id', '$title', '$body', '$createdAt', '$modifiedAt', '$author');";
+				
+		mysqli_query($this->mysqli,$sql);
+	}
+
+	/*
+	Closes connection to db.
+	Can be used if a script needs to make sure connection is manually closed
+	*/	
+	public function closeConnection()
+	{
+		mysqli_close($this->mysqli);
 	}
 }
 ?>
