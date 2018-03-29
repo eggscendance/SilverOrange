@@ -91,6 +91,41 @@ class DbAdmin
 				
 		mysqli_query($this->mysqli,$sql);
 	}
+	
+	/*
+	Get all records in reverse chronological order
+	Returns an array of Post objects
+	*/
+	public function getRecordsReverseChrono()
+	{
+		$sql = "SELECT id, title, body, author
+				FROM posts
+				ORDER BY created_at DESC;";
+				
+		$posts[] = array(); //initialize array
+		$index = 0;
+				
+		if ($result=mysqli_query($this->mysqli,$sql))
+		{
+			// Fetch row
+			while ($row=mysqli_fetch_row($result))
+			{
+				$postId = $row[0];
+				$postTitle = $row[1];
+				$postBody = $row[2];
+				$postAuthor = $row[3];
+		
+				$posts[$index] = new Post($postId, $postTitle, $postBody, $postAuthor);
+				$index++;
+			}
+			
+		  // Free result set
+		  mysqli_free_result($result);
+		}
+
+		mysqli_close($this->mysqli); //close our connection
+		return $posts;
+	}
 
 	/*
 	Closes connection to db.
