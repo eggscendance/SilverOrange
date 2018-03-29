@@ -1,6 +1,5 @@
 <?php
 namespace OrangeTest;
-require_once('DbConnector.php');
 require_once('Post.php');
 
 /*
