@@ -23,24 +23,24 @@ class Post
 	/*
 	Getter Methods
 	*/
-	public getId()
+	public function getId()
 	{
-		return $id;
+		return $this->id;
 	}
 	
-	public getTitle()
+	public function getTitle()
 	{
-		return $title;
+		return $this->title;
 	}
 	
-	public getBody()
+	public function getBody()
 	{
-		return $body;
+		return $this->body;
 	}
 	
-	public getAuthor()
+	public function getAuthor()
 	{
-		return $author;
+		return $this->author;
 	}
 }
 ?>
